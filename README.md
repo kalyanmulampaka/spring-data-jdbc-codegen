@@ -17,25 +17,26 @@ Objectives
 
 Features
 --------
-  1. Domain class with optional JSR-303 validation annotations.
-  2. Repository class with @Repository annotation.
+  1. Domain class with optional **JSR-303** validation annotations.
+  2. Repository class with **@Repository** annotation.
   3. Database helper class with RowMapper and RowUnMapper, table and column details. All table and column information is encapsulated in this class.
   
 
 Sample code
 -----------
   If the table, **Comments** is defined as below
-  
-      CREATE SEQUENCE comment_seq;
 
-      CREATE TABLE IF NOT EXISTS **COMMENTS** (
-        id INT PRIMARY KEY DEFAULT nextval('comment_seq'),
-      	user_name varchar(256) REFERENCES USERS,
-      	contents varchar(1000),
-      	created_time TIMESTAMP NOT NULL,
-      	favourite_count INT NOT NULL
-      );
-      
+    CREATE SEQUENCE comment_seq;
+    
+    CREATE TABLE IF NOT EXISTS  COMMENTS  (
+    id INT PRIMARY KEY DEFAULT nextval('comment_seq'),
+    user_name varchar(256) REFERENCES USERS,
+    contents varchar(1000),
+    created_time TIMESTAMP NOT NULL,
+    favourite_count INT NOT NULL
+    );
+
+
   the following classes are generated,
 
 
