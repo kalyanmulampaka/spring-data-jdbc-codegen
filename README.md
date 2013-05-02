@@ -1,4 +1,4 @@
-Spring Data Jdbc Codegen Tool
+Spring Data JDBC Codegen Tool
 =============================
 
 This is a simple code generator tool to scaffold the spring data jdbc dao classes.
@@ -17,7 +17,9 @@ Objectives
 
 Features
 --------
-  1. Domain class with optional **JSR-303** validation annotations.
+  1. Uses the Spring Data JDBC Generic Dao implementation created by **nurkiewicz**, 
+     https://github.com/nurkiewicz/spring-data-jdbc-repository
+  2. Domain class with optional **JSR-303** validation annotations.
   2. Repository class with **@Repository** annotation.
   3. Database helper class with RowMapper and RowUnMapper, table and column details. All table and column information is encapsulated in this class.
   
@@ -40,98 +42,99 @@ Sample code
   the following classes are generated,
 
 
-  **Domain Class:**
+  **Domain Class:** A Simple POJO with the fields defined in the database table. Implements the Spring Data JDBC Persistable interface to enable persistence.
   
     public class Comments implements Persistable<Integer>
     {
     
-    private static final long serialVersionUID = 1L;
+       private static final long serialVersionUID = 1L;
+       
+       private Integer id;
+       
+       private String userName;
+       
+       private String contents;
+       
+       private Date createdTime;
+       
+       private Integer favouriteCount;
+       
+       private transient boolean persisted;
+       
+       private Users users;
     
-    private Integer id;
-    
-    private String userName;
-    
-    private String contents;
-    
-    private Date createdTime;
-    
-    private Integer favouriteCount;
-    
-    private transient boolean persisted;
-    
-    private Users users;
-    
-    public Comments ()
-    {
-    
-    }
-    ...
+       public Comments ()
+       {
+       
+       }
+       ...
 
   
-  **Repository Class:**
+  **Repository Class:** The repository dao class extending the JdbcRepository.
   
     @Repository
     public class CommentsRepository extends JdbcRepository<Comments, Integer>
     {
     
-      final static Logger logger = LoggerFactory.getLogger (CommentsRepository.class);
+        final static Logger logger = LoggerFactory.getLogger (CommentsRepository.class);
     
-    	public CommentsRepository()
-    	{
-    		super (CommentsDB.ROW_MAPPER, CommentsDB.ROW_UNMAPPER, CommentsDB.getTableName ());
-    	}
+       	public CommentsRepository()
+       	{
+       		super (CommentsDB.ROW_MAPPER, CommentsDB.ROW_UNMAPPER, CommentsDB.getTableName ());
+       	}
+       
+       	public CommentsRepository(RowMapper<Comments> rowMapper, RowUnmapper<Comments> rowUnmapper, String idColumn)
+       	{
+       		super (CommentsDB.ROW_MAPPER, CommentsDB.ROW_UNMAPPER, CommentsDB.getTableName (), idColumn);
+       	}
+       
+       	@Override
+       	protected Comments postCreate(Comments entity, Number generatedId)
+       	{
+       		entity.setId(generatedId.intValue());
+       		entity.setPersisted(true);
+       		return entity;
+       	}
+       
+       
+       	public List<Comments> getCommentsByUserName (Long userName)
+       	{
+       		String sql = "select * from " + CommentsDB.getTableName() + " where " + CommentsDB.COLUMNS.USER_NAME.getColumnName() + " = ? ";
+       		return this.getJdbcOperations ().query (sql, new Object[] { userName }, CommentsDB.ROW_MAPPER);
+       	}
+       ...
     
-    	public CommentsRepository(RowMapper<Comments> rowMapper, RowUnmapper<Comments> rowUnmapper, String idColumn)
-    	{
-    		super (CommentsDB.ROW_MAPPER, CommentsDB.ROW_UNMAPPER, CommentsDB.getTableName (), idColumn);
-    	}
-    
-    	@Override
-    	protected Comments postCreate(Comments entity, Number generatedId)
-    	{
-    		entity.setId(generatedId.intValue());
-    		entity.setPersisted(true);
-    		return entity;
-    	}
-    
-    
-    	public List<Comments> getCommentsByUserName (Long userName)
-    	{
-    		String sql = "select * from " + CommentsDB.getTableName() + " where " + CommentsDB.COLUMNS.USER_NAME.getColumnName() + " = ? ";
-    		return this.getJdbcOperations ().query (sql, new Object[] { userName }, CommentsDB.ROW_MAPPER);
-    	}
-    ...
-    
-  **Helper Class:**
+  **Helper Class:** A helper class with **all** the database table related information encapsulated. 
   
       public class CommentsDB
       {
       
-        private static String TABLE_NAME = "COMMENTS";
+          private static String TABLE_NAME = "COMMENTS";
       
-      	private static String TABLE_ALIAS = "com";
-      
-      	public static String getTableName()
-      	{
-      		return TABLE_NAME;
-      	}
-      
-      	public static String getTableAlias()
-      	{
-      		return TABLE_NAME + " as " + TABLE_ALIAS;
-      	}
-      
-      	public enum COLUMNS
-      	{
-      		ID("id"),
-      		USER_NAME("user_name"),
-      		CONTENTS("contents"),
-      		CREATED_TIME("created_time"),
-      		FAVOURITE_COUNT("favourite_count"),
-      		;
-          ...
-        }
+         	private static String TABLE_ALIAS = "com";
+         
+         	public static String getTableName()
+         	{
+         		return TABLE_NAME;
+         	}
+         
+         	public static String getTableAlias()
+         	{
+         		return TABLE_NAME + " as " + TABLE_ALIAS;
+         	}
+         
+         	public enum COLUMNS
+         	{
+         		ID("id"),
+         		USER_NAME("user_name"),
+         		CONTENTS("contents"),
+         		CREATED_TIME("created_time"),
+         		FAVOURITE_COUNT("favourite_count"),
+         		;
+             ...
+           }
         
+   RowMapper and RowUnMapper classes to read and write the POJO class to database.
     
     	public static final class  CommentsRowMapper implements RowMapper<Comments>
     	{
@@ -166,6 +169,8 @@ Sample code
 
 Code Generator Properties
 -------------------------
+
+The following properties created in a file named, codegenerator.properties is required to generate the code. This should be available in the classpath so typically stored in **src/main/resources** folder.
 
 
     # Enable code generation. If false nothing will happen even if CodeGenerator.generate() is called
@@ -236,7 +241,7 @@ Maven coordinates
    			<version>1.0.0</version>
    		</dependency>
 ```
-Note: This project is not yet deployed to central maven repository so you need to install locally, as follows:
+**Note: This project is not yet deployed to central maven repository so you need to install locally, as follows:**
 
 ```
 $ git clone git://github.com/kalyanmulampaka/spring-data-jdbc-codegen.git
