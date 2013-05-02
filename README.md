@@ -243,7 +243,6 @@ Step 1: Code generator Maven coordinates
 ```
 $ git clone git://github.com/kalyanmulampaka/spring-data-jdbc-codegen.git
 $ cd spring-data-jdbc-codegen
-$ git checkout 1.0.0
 $ mvn javadoc:jar source:jar install
 ```
 
