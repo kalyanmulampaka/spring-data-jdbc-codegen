@@ -182,7 +182,7 @@ Preserve Custom Code
 The generated code is not the end, these classes can be modified to add custom logic and code which is preserved when the generator regenerates the code.
 Any code placed in the following tags is copied over to the new file when the code is regenerated.
 
-```
+``` java
    /* START Do not remove/edit this line. CodeGenerator will preserve any code between start and end tags.*/
 
    /* END Do not remove/edit this line. CodeGenerator will preserve any between start and end tags.*/
@@ -193,7 +193,7 @@ JSR-303 Bean Validation
 -----------------------
 If **```generate.jsr303.annotations=true```** then the POJO created will have the JSR-303 annotations as shown in the sample below.
 
-
+``` java
     public class Comments implements Persistable<Integer>
     {
     
@@ -223,7 +223,7 @@ If **```generate.jsr303.annotations=true```** then the POJO created will have th
     	{
     
     	}
-
+```
 
 
 
@@ -232,7 +232,7 @@ Code Generator Properties
 
 The following properties created in a file named, codegenerator.properties is required to generate the code. This should be available in the classpath so typically stored in **src/main/resources** folder.
 
-
+``` java
     # Enable code generation. If false nothing will happen even if CodeGenerator.generate() is called
     codegeneration.enabled=true
     
@@ -245,9 +245,10 @@ The following properties created in a file named, codegenerator.properties is re
     # Package Name of the class and interfaces
     # Generated domain class and interfaces will be created with the following package name and folder structure
     domain.package.name=com.generated.code.domain
-    
+ ```   
 Domain classes can be generated with JSR-303 validation annotations. Validations are based on the column size, type, constraints.
 
+``` java
     # Generate jsr-303 validation annotations
     generate.jsr303.annotations=true
    
@@ -258,17 +259,18 @@ Domain classes can be generated with JSR-303 validation annotations. Validations
     # Generated Repository helper class and interfaces will be created with the following package name and folder structure
     repository.package.name=com.generated.code.repository
     repository.db.package.name=com.generated.code.repository.db
-    
-Ignore a list of tables and columns. code will not be generated for these lists.
+```
 
+Ignore a list of tables and columns. code will not be generated for these lists.
+``` java
     #
     # following tables will be ignored during code generation, comma separated table names or patterns e.g qrtz*  or *queue
     ignore.tablelist=
     # following columns will be ignored during code generation
     ignore.columnlist=
-   
+```   
 Parent-Child relationship objects can be created in the domain classes.   
-   
+``` java   
     # Parent - Child relations. create child objects in parent object based on the relationship
     # relationship has to be in this format: ParentTableName:ChildTableName:OneToMany multiple sets should be comma separated
     # this creates the structure as follows:
@@ -277,9 +279,9 @@ Parent-Child relationship objects can be created in the domain classes.
     # Db class: Alias Mapper in the Parent Db class will call the above method to set the list of child objects.
     # Valid relations are OneToOne, OneToMany
     parent.child.relations=
-    
+```    
  Database configuration:
- 
+ ``` java
     #
     # DATABASE CONFIGURATION
     #
@@ -288,6 +290,7 @@ Parent-Child relationship objects can be created in the domain classes.
     jdbc.url=jdbc:postgresql://localhost:5432/test
     jdbc.username=postgres
     jdbc.password=postgres
+```
 
 Getting Started
 ================
@@ -308,7 +311,7 @@ $ mvn javadoc:jar source:jar install
 
  1.1 Add the following maven dependency to your pom.xml.
 
-```    
+``` xml   
     	<dependency>
    			<groupId>com.mulampaka.spring.data.jdbc</groupId>
    			<artifactId>spring-data-jdbc-codegen</artifactId>
