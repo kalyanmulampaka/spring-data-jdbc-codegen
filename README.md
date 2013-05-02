@@ -43,7 +43,7 @@ Sample code
   the following classes are generated,
 
 
-  **Domain Class:** A Simple POJO with the fields defined in the database table. Implements the Spring Data JDBC Persistable interface to enable persistence.
+  **Domain Class:** A Simple POJO with the fields defined in the database table. Implements the Spring Data JDBC **```Persistable```** interface to enable persistence.
   
     public class Comments implements Persistable<Integer>
     {
@@ -70,7 +70,7 @@ Sample code
        }
        ...
 
-  **Helper Class:** A helper class with **all** the database table related information encapsulated. Columns names exposed as an **enum**.
+  **Helper Class:** A helper class with **all** the database table related information encapsulated. Columns names exposed as an **```enum```**.
   
       public class CommentsDB
       {
@@ -100,7 +100,7 @@ Sample code
              ...
            }
         
-   RowMapper and RowUnMapper classes to read and write the POJO class to database.
+   **```RowMapper```** and **```RowUnMapper```** classes to read and write the POJO class to database.
     
     	public static final class  CommentsRowMapper implements RowMapper<Comments>
     	{
@@ -134,7 +134,7 @@ Sample code
     ...
 
   
-  **Repository Class:** The repository dao class extending the JdbcRepository.
+  **Repository Class:** The repository dao class extending the **```JdbcRepository```**.
   
     @Repository
     public class CommentsRepository extends JdbcRepository<Comments, Integer>
