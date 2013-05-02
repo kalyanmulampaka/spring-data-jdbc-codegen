@@ -164,3 +164,64 @@ Sample code
     	}
     ...
 
+Code Generator Properties
+-------------------------
+
+
+    # Enable code generation. If false nothing will happen even if CodeGenerator.generate() is called
+    codegeneration.enabled=true
+    
+    # Folder path where the code will be generated
+    src.folder.path=src/main/java
+    
+    #
+    # DOMAIN CLASSES
+    #
+    # Package Name of the class and interfaces
+    # Generated domain class and interfaces will be created with the following package name and folder structure
+    domain.package.name=com.generated.code.domain
+    
+Domain classes can be generated with JSR-303 validation annotations. Validations are based on the column size, type, constraints.
+
+    # Generate jsr-303 validation annotations
+    generate.jsr303.annotations=true
+   
+    #
+    # REPOSITORY CLASSES
+    #
+    # Repository package name
+    repository.package.name=com.generated.code.repository
+    # Generated Repository helper class and interfaces will be created with the following package name and folder structure
+    repository.db.package.name=com.generated.code.repository.db
+    
+Ignore a list of tables and columns. code will not be generated for these lists.
+
+    #
+    # following tables will be ignored during code generation, comma separated table names or patterns e.g qrtz*  or *queue
+    ignore.tablelist=
+    # following columns will be ignored during code generation
+    ignore.columnlist=
+   
+Parent-Child relationship objects can be created in the domain classes.   
+   
+    # Parent - Child relations. create child objects in parent object based on the relationship
+    # relationship has to be in this format: ParentTableName:ChildTableName:OneToMany multiple sets should be comma separated
+    # this creates the structure as follows:
+    # ParentDomainClass: Field List<ChildDomainClass> children will be created in parent domain class to represent the relationship.
+    # Repository class: A method to get the list of child rows by parent id will be created in the Child Repository class.
+    # Db class: Alias Mapper in the Parent Db class will call the above method to set the list of child objects.
+    # Valid relations are OneToOne, OneToMany
+    parent.child.relations=
+    
+ Database configuration:
+ 
+    #
+    # DATABASE CONFIGURATION
+    #
+    # Postgres
+    jdbc.driverClassName=org.postgresql.Driver
+    jdbc.url=jdbc:postgresql://localhost:5432/test
+    jdbc.username=postgres
+    jdbc.password=postgres
+
+
