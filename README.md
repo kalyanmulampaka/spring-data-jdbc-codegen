@@ -247,9 +247,9 @@ Domain classes can be generated with JSR-303 validation annotations. Validations
     #
     # REPOSITORY CLASSES
     #
-    # Repository package name
-    repository.package.name=com.generated.code.repository
+    # Repository package name    
     # Generated Repository helper class and interfaces will be created with the following package name and folder structure
+    repository.package.name=com.generated.code.repository
     repository.db.package.name=com.generated.code.repository.db
     
 Ignore a list of tables and columns. code will not be generated for these lists.
