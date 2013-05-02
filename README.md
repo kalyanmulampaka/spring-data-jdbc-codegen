@@ -224,4 +224,23 @@ Parent-Child relationship objects can be created in the domain classes.
     jdbc.username=postgres
     jdbc.password=postgres
 
+Getting Started
+================
 
+Maven coordinates
+
+```    
+    	<dependency>
+   			<groupId>com.mulampaka.spring.data.jdbc</groupId>
+   			<artifactId>spring-data-jdbc-codegen</artifactId>
+   			<version>1.0.0</version>
+   		</dependency>
+```
+Note: This project is not yet deployed to central maven repository so you need to install locally, as follows:
+
+```
+$ git clone git://github.com/kalyanmulampaka/spring-data-jdbc-codegen.git
+$ cd spring-data-jdbc-codegen
+$ git checkout 1.0.0
+$ mvn javadoc:jar source:jar install
+```
