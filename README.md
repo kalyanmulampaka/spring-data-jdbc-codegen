@@ -269,6 +269,7 @@ Step 3: Create properties file
 Step 4: Generate code
 ---------------------
  4.1 ``` mvn clean install ``` 
+   
    Generated code should be in the directory (src.folder.path) specified in the properties file.
 
 
