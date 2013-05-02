@@ -100,7 +100,7 @@ Sample code
              ...
            }
         
-   **```RowMapper```** and **```RowUnMapper```** classes to read and write the POJO class to database.
+   **```RowMapper``` and ```RowUnMapper```** classes to read and write the POJO class to database.
     
     	public static final class  CommentsRowMapper implements RowMapper<Comments>
     	{
