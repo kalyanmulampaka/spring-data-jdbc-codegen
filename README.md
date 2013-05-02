@@ -70,49 +70,14 @@ Sample code
        }
        ...
 
-  
-  **Repository Class:** The repository dao class extending the JdbcRepository.
-  
-    @Repository
-    public class CommentsRepository extends JdbcRepository<Comments, Integer>
-    {
-    
-        final static Logger logger = LoggerFactory.getLogger (CommentsRepository.class);
-    
-       	public CommentsRepository()
-       	{
-       		super (CommentsDB.ROW_MAPPER, CommentsDB.ROW_UNMAPPER, CommentsDB.getTableName ());
-       	}
-       
-       	public CommentsRepository(RowMapper<Comments> rowMapper, RowUnmapper<Comments> rowUnmapper, String idColumn)
-       	{
-       		super (CommentsDB.ROW_MAPPER, CommentsDB.ROW_UNMAPPER, CommentsDB.getTableName (), idColumn);
-       	}
-       
-       	@Override
-       	protected Comments postCreate(Comments entity, Number generatedId)
-       	{
-       		entity.setId(generatedId.intValue());
-       		entity.setPersisted(true);
-       		return entity;
-       	}
-       
-       
-       	public List<Comments> getCommentsByUserName (Long userName)
-       	{
-       		String sql = "select * from " + CommentsDB.getTableName() + " where " + CommentsDB.COLUMNS.USER_NAME.getColumnName() + " = ? ";
-       		return this.getJdbcOperations ().query (sql, new Object[] { userName }, CommentsDB.ROW_MAPPER);
-       	}
-       ...
-    
-  **Helper Class:** A helper class with **all** the database table related information encapsulated. 
+  **Helper Class:** A helper class with **all** the database table related information encapsulated. Columns names exposed as an **enum**.
   
       public class CommentsDB
       {
       
           private static String TABLE_NAME = "COMMENTS";
       
-         	private static String TABLE_ALIAS = "com";
+          private static String TABLE_ALIAS = "com";
          
          	public static String getTableName()
          	{
@@ -167,6 +132,43 @@ Sample code
     		}
     	}
     ...
+
+  
+  **Repository Class:** The repository dao class extending the JdbcRepository.
+  
+    @Repository
+    public class CommentsRepository extends JdbcRepository<Comments, Integer>
+    {
+    
+        final static Logger logger = LoggerFactory.getLogger (CommentsRepository.class);
+    
+       	public CommentsRepository()
+       	{
+       		super (CommentsDB.ROW_MAPPER, CommentsDB.ROW_UNMAPPER, CommentsDB.getTableName ());
+       	}
+       
+       	public CommentsRepository(RowMapper<Comments> rowMapper, RowUnmapper<Comments> rowUnmapper, String idColumn)
+       	{
+       		super (CommentsDB.ROW_MAPPER, CommentsDB.ROW_UNMAPPER, CommentsDB.getTableName (), idColumn);
+       	}
+       
+       	@Override
+       	protected Comments postCreate(Comments entity, Number generatedId)
+       	{
+       		entity.setId(generatedId.intValue());
+       		entity.setPersisted(true);
+       		return entity;
+       	}
+       
+       
+       	public List<Comments> getCommentsByUserName (Long userName)
+       	{
+       		String sql = "select * from " + CommentsDB.getTableName() + " where " + CommentsDB.COLUMNS.USER_NAME.getColumnName() + " = ? ";
+       		return this.getJdbcOperations ().query (sql, new Object[] { userName }, CommentsDB.ROW_MAPPER);
+       	}
+       ...
+    
+
 
 Preserve Custom Code
 --------------------
