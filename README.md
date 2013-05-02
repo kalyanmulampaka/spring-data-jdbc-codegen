@@ -262,7 +262,7 @@ $ mvn javadoc:jar source:jar install
 
 Step 3: Create properties file
 ------------------------------
- 3.1 Download and Copy the [sample properties file](http://file) to **src/main/resources** in your project.
+ 3.1 Download and Copy the [sample properties file](https://github.com/kalyanmulampaka/spring-data-jdbc-codegen/blob/master/src/main/resources/codegenerator.properties) to **src/main/resources** in your project.
  
  3.2 Edit the database configuration with the correct information.
  
