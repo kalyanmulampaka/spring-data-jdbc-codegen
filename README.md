@@ -29,7 +29,7 @@ Features
 Sample code
 -----------
   If the table, **Comments** is defined as below
-
+``` sql
     CREATE SEQUENCE comment_seq;
     
     CREATE TABLE IF NOT EXISTS  COMMENTS  (
@@ -39,7 +39,7 @@ Sample code
     created_time TIMESTAMP NOT NULL,
     favourite_count INT NOT NULL
     );
-
+```
 
   the following classes are generated,
 
