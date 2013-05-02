@@ -23,6 +23,7 @@ Features
   2. Repository class with **@Repository** annotation.
   3. Database helper class with RowMapper and RowUnMapper, table and column details. All table and column information is encapsulated in this class.
   4. Generated code can be edited and custom code can be added. Regenerating the code will not delete the custom code.
+  5. Supports Postgres and Mysql. (other databases not tested)
   
 
 Sample code
