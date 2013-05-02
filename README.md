@@ -17,7 +17,7 @@ Objectives
 
 Features
 --------
-  1. Uses the Spring Data JDBC Generic Dao implementation created by **nurkiewicz**, 
+  1. Uses the Spring Data JDBC Generic Dao implementation created by **Tomasz Nurkiewicz**, 
      https://github.com/nurkiewicz/spring-data-jdbc-repository
   2. Domain class with optional **JSR-303** validation annotations.
   2. Repository class with **@Repository** annotation.
