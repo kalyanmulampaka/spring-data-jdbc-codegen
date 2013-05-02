@@ -234,11 +234,8 @@ Getting Started
 
 Use the Maven plugin which generates the code before the compile phase. That way the generated code and your existing code with the dependencies will be compiled correctly.
 
-Step 1: Code generator Maven plugin
-------------------------------------
- 1.1 Go to [Spring Data JDBC Code Generator Maven Plugin](https://github.com/kalyanmulampaka/spring-data-jdbc-codegen-maven-plugin), and follow the instructions to install the maven plugin.
 
-Step 2: Code generator Maven coordinates
+Step 1: Code generator Maven coordinates
 -----------------------------------------
 
 **Note: This project is not yet deployed to any central maven repository so you need to install it locally, as follows:**
@@ -250,7 +247,7 @@ $ git checkout 1.0.0
 $ mvn javadoc:jar source:jar install
 ```
 
- 2.1 Add the following maven dependency to your pom.xml.
+ 1.1 Add the following maven dependency to your pom.xml.
 
 ```    
     	<dependency>
@@ -260,11 +257,16 @@ $ mvn javadoc:jar source:jar install
    		</dependency>
 ```
 
-Step 3: Create properties file
+Step 2: Create properties file
 ------------------------------
- 3.1 Download and Copy the [sample properties file](https://github.com/kalyanmulampaka/spring-data-jdbc-codegen/blob/master/src/main/resources/codegenerator.properties) to **src/main/resources** in your project.
+ 2.1 Download and Copy the [sample properties file](https://github.com/kalyanmulampaka/spring-data-jdbc-codegen/blob/master/src/main/resources/codegenerator.properties) to **src/main/resources** in your project.
  
- 3.2 Edit the database configuration with the correct information.
+ 2.2 Edit the database configuration with the correct information.
+ 
+Step 3: Code generator Maven plugin
+------------------------------------
+ 3.1 Go to [Spring Data JDBC Code Generator Maven Plugin](https://github.com/kalyanmulampaka/spring-data-jdbc-codegen-maven-plugin), and follow the instructions to install the maven plugin.
+ 
  
 Step 4: Generate code
 ---------------------
