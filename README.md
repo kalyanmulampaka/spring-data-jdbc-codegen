@@ -182,6 +182,44 @@ Any code placed in the following tags is copied over to the new file when the co
 ```
 
 
+JSR-303 Bean Validation
+-----------------------
+If **```generate.jsr303.annotations=true```** then the POJO created will have the JSR-303 annotations as shown in the sample below.
+
+
+    public class Comments implements Persistable<Integer>
+    {
+    
+     private static final long serialVersionUID = 1L;
+    
+    	@NotNull (groups = { Default.class })
+    	@Null (groups = { Default.class })
+    	private Integer id;
+    
+    	@Size (max = 256)
+    	private String userName;
+    
+    	@Size (max = 1000)
+    	private String contents;
+    
+    	@NotNull
+    	private Date createdTime;
+    
+    	@NotNull
+    	private Integer favouriteCount;
+    
+    	private transient boolean persisted;
+    
+    	private Users users;
+    
+    	public Comments ()
+    	{
+    
+    	}
+
+
+
+
 Code Generator Properties
 -------------------------
 
