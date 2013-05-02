@@ -232,15 +232,15 @@ Parent-Child relationship objects can be created in the domain classes.
 Getting Started
 ================
 
-Maven coordinates
+I created a Maven plugin which generates the code before the compile phase. That way the generated code and your existing code with the dependencies will be compiled correctly.
 
-```    
-    	<dependency>
-   			<groupId>com.mulampaka.spring.data.jdbc</groupId>
-   			<artifactId>spring-data-jdbc-codegen</artifactId>
-   			<version>1.0.0</version>
-   		</dependency>
-```
+Step 1: Code generator Maven plugin
+------------------------------------
+ 1.1 Go here [Spring Data JDBC Code Generator Maven Plugin](https://github.com/kalyanmulampaka/spring-data-jdbc-codegen-maven-plugin), and follow the instructions to install the maven plugin.
+
+Step 2: Code generator Maven coordinates
+-----------------------------------------
+
 **Note: This project is not yet deployed to central maven repository so you need to install locally, as follows:**
 
 ```
@@ -249,3 +249,31 @@ $ cd spring-data-jdbc-codegen
 $ git checkout 1.0.0
 $ mvn javadoc:jar source:jar install
 ```
+
+ 2.1 Add the following maven dependency to your pom.xml.
+
+```    
+    	<dependency>
+   			<groupId>com.mulampaka.spring.data.jdbc</groupId>
+   			<artifactId>spring-data-jdbc-codegen</artifactId>
+   			<version>1.0.0</version>
+   		</dependency>
+```
+
+Step 3: Create properties file
+------------------------------
+ 3.1 Download and Copy the [sample properties file](http://file) to **src/main/resources** in your project.
+ 
+ 3.2 Edit the database configuration with the correct information.
+ 
+Step 4: Generate code
+---------------------
+ 4.1 ``` mvn clean install ``` Generated code should be in the directory (src.folder.path) specified in the properties file.
+
+
+
+
+License
+=======
+This project is released under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).
+
