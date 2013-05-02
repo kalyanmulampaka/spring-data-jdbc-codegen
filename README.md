@@ -236,7 +236,7 @@ I created a Maven plugin which generates the code before the compile phase. That
 
 Step 1: Code generator Maven plugin
 ------------------------------------
- 1.1 Go here [Spring Data JDBC Code Generator Maven Plugin](https://github.com/kalyanmulampaka/spring-data-jdbc-codegen-maven-plugin), and follow the instructions to install the maven plugin.
+ 1.1 Go to [Spring Data JDBC Code Generator Maven Plugin](https://github.com/kalyanmulampaka/spring-data-jdbc-codegen-maven-plugin), and follow the instructions to install the maven plugin.
 
 Step 2: Code generator Maven coordinates
 -----------------------------------------
@@ -268,7 +268,8 @@ Step 3: Create properties file
  
 Step 4: Generate code
 ---------------------
- 4.1 ``` mvn clean install ``` Generated code should be in the directory (src.folder.path) specified in the properties file.
+ 4.1 ``` mvn clean install ``` 
+   Generated code should be in the directory (src.folder.path) specified in the properties file.
 
 
 
