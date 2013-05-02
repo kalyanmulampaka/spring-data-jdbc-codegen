@@ -22,6 +22,7 @@ Features
   2. Domain class with optional **JSR-303** validation annotations.
   2. Repository class with **@Repository** annotation.
   3. Database helper class with RowMapper and RowUnMapper, table and column details. All table and column information is encapsulated in this class.
+  4. Generated code can be edited and custom code can be added. Regenerating the code will not delete the custom code.
   
 
 Sample code
@@ -166,6 +167,18 @@ Sample code
     		}
     	}
     ...
+
+Preserve Custom Code
+--------------------
+The generated code is not the end, these classes can be modified to add custom logic and code which is preserved when the generator regenerates the code.
+Any code placed in the following tags is copied over to the new file when the code is regenerated.
+
+```
+   /* START Do not remove/edit this line. CodeGenerator will preserve any code between start and end tags.*/
+
+   /* END Do not remove/edit this line. CodeGenerator will preserve any between start and end tags.*/
+```
+
 
 Code Generator Properties
 -------------------------
