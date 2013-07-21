@@ -55,7 +55,10 @@ public abstract class BaseClass
 	protected StringBuffer sourceBuf = new StringBuffer ("");
 	
 	private static String COMMENT_START = "/* START Do not remove/edit this line. CodeGenerator will preserve any code between start and end tags.*/";
-	private static String COMMENT_END = "/* END Do not remove/edit this line. CodeGenerator will preserve any between start and end tags.*/";
+	private static String COMMENT_END = "/* END Do not remove/edit this line. CodeGenerator will preserve any code between start and end tags.*/";
+	
+	private static String IS_COMMENT_START = "/* START";
+	private static String IS_COMMENT_END = "/* END";
 
 	public BaseClass ()
 	{
@@ -228,8 +231,8 @@ public abstract class BaseClass
 			String contents = FileUtils.readFileToString (file);
 			//logger.trace ("File contents:{}", contents);
 
-			int startIndex = StringUtils.indexOf (contents, COMMENT_START);
-			int endIndex = StringUtils.indexOf (contents, COMMENT_END);
+			int startIndex = StringUtils.indexOf (contents, IS_COMMENT_START);
+			int endIndex = StringUtils.indexOf (contents, IS_COMMENT_END);
 			logger.debug ("Start index:{} End index:{}", startIndex, endIndex);
 			if (startIndex != -1 && endIndex != -1)
 			{
