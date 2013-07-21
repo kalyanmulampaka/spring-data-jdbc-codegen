@@ -185,7 +185,7 @@ Any code placed in the following tags is copied over to the new file when the co
 ``` java
    /* START Do not remove/edit this line. CodeGenerator will preserve any code between start and end tags.*/
 
-   /* END Do not remove/edit this line. CodeGenerator will preserve any between start and end tags.*/
+   /* END Do not remove/edit this line. CodeGenerator will preserve any code between start and end tags.*/
 ```
 
 
