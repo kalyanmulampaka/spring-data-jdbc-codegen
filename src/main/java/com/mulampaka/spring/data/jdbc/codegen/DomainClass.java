@@ -74,7 +74,10 @@ public class DomainClass extends BaseClass
 	protected void addImports ()
 	{
 		this.imports.add ("org.apache.commons.lang.builder.ToStringBuilder");
-	}
+        //RGG
+        this.imports.add ("org.apache.commons.lang.builder.HashCodeBuilder");
+        this.imports.add ("org.apache.commons.lang.builder.EqualsBuilder");
+    }
 	
 	public boolean isGenerateJsr303Annotations ()
 	{
@@ -199,6 +202,13 @@ public class DomainClass extends BaseClass
 
 			}
 			sourceBuf.append ("\tprivate " + modifiers.toString () + type + " " + fieldName);
+
+            //RGG
+            DATABASE d = DATABASE.getByName (this.getDbProductName ());
+            logger.debug ("Database:{}", d);
+            this.prerareDefaultValue(field,d);
+
+
 			if (StringUtils.isNotBlank (field.getDefaultValue ()))
 			{
 				logger.debug ("Found default value:{}", field.getDefaultValue ());
@@ -241,8 +251,6 @@ public class DomainClass extends BaseClass
 						break;
 					case STRING:
 					case CHAR:
-						DATABASE d = DATABASE.getByName (this.getDbProductName ());
-						logger.debug ("Database:{}", d);
 						switch (d)
 						{
 						case POSTGRESQL:
@@ -383,7 +391,40 @@ public class DomainClass extends BaseClass
 			super.printOpenBrace (1, 1);
 			sourceBuf.append ("\t\treturn this." + CodeGenUtil.normalize (key) + ";\n");
 			super.printCloseBrace (1, 2);
-			
+
+            //RGG
+            if ("id".equalsIgnoreCase (key))
+            {
+                sourceBuf.append ("\tpublic boolean isNew ()\n");
+                sourceBuf.append ("\t{\n");
+                sourceBuf.append ("\t\treturn this." + CodeGenUtil.normalize (key) + " == null;\n");
+                super.printCloseBrace (1, 2);
+
+                sourceBuf.append ("\tpublic void setId(" + keyType.getName () + " id)\n");
+                sourceBuf.append ("\t{\n");
+                sourceBuf.append ("\t\tthis.id = id;\n");
+                super.printCloseBrace (1, 2);
+
+            }else{
+                sourceBuf.append ("\tpublic boolean isNew ()\n");
+                super.printOpenBrace (1, 1);
+                sourceBuf.append ("\t\treturn !persisted;\n");
+                super.printCloseBrace (1, 2);
+
+                sourceBuf.append ("\tpublic void setId(" + keyType.getName () + " id)\n");
+                sourceBuf.append ("\t{\n");
+                sourceBuf.append ("\t\tthis." + CodeGenUtil.normalize (key) + " = id;\n");
+                super.printCloseBrace (1, 2);
+
+                sourceBuf.append ("\tpublic "+WordUtils.capitalize (CodeGenUtil.normalize (name)) + this.classSuffix+" withPersisted(boolean persisted)\n");
+                super.printOpenBrace (1, 1);
+                sourceBuf.append ("\t\tthis.persisted = persisted;\n");
+                sourceBuf.append ("\t\treturn this;\n");
+                super.printCloseBrace (1, 2);
+
+            }
+
+            /*
 			sourceBuf.append ("\tpublic boolean isNew ()\n");
 			sourceBuf.append ("\t{\n");
 			sourceBuf.append ("\t\treturn this." + CodeGenUtil.normalize (key) + " == null;\n");
@@ -395,6 +436,8 @@ public class DomainClass extends BaseClass
 				sourceBuf.append ("\t\tthis.id = id;\n");
 				super.printCloseBrace (1, 2);
 			}
+
+             */
 
 		}
 		else
@@ -541,11 +584,45 @@ public class DomainClass extends BaseClass
 
 		super.printToString ();
 
+        //RGG
+        super.printHashCode();
+        //RGG
+        super.printEquals();
+
 		super.printUserSourceCode ();
 
 		super.printCloseBrace (0, 0); // end of class
 		//logger.debug ("Printing Class file content:\n" + sourceBuf.toString ());
 
 	}
+
+
+
+
+    //RGG
+    private void prerareDefaultValue(Field field, DATABASE d)
+    {
+
+        if (field.getDefaultValue() != null){
+
+            ParameterType t = field.getType ();
+
+            switch(d)
+            {
+                case MSSQLSERVER:
+                    switch(t){
+                        case INTEGER:
+                        case LONG:
+                        case DOUBLE:
+                        case FLOAT:
+                            field.setDefaultValue(field.getDefaultValue().replace("(", "").replace(")", "").replace("NULL", ""));
+                            break;
+                        default:
+                    }
+                    break;
+                default:
+            }
+        }
+    }
 
 }

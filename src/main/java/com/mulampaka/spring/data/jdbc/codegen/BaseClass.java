@@ -188,6 +188,29 @@ public abstract class BaseClass
 		this.printCloseBrace (1, 2);
 	}
 
+    //RGG
+    protected void printHashCode ()
+    {
+        //override hascode()
+        sourceBuf.append ("\t@Override\n\tpublic int hashCode () \n");
+        this.printOpenBrace (1, 1);
+        sourceBuf.append ("\t\treturn HashCodeBuilder.reflectionHashCode(this); \n");
+        this.printCloseBrace (1, 2);
+    }
+
+    //RGG
+    protected void printEquals ()
+    {
+        //override equals()
+        sourceBuf.append ("\t@Override\n\tpublic boolean equals(Object obj) \n");
+        this.printOpenBrace (1, 1);
+        sourceBuf.append ("\t\treturn EqualsBuilder.reflectionEquals(this, obj); \n");
+        this.printCloseBrace (1, 2);
+    }
+
+
+
+
 	protected String getSourceFileName ()
 	{
 		String path = "";
@@ -456,6 +479,7 @@ public abstract class BaseClass
 	{
 		POSTGRESQL ("PostgreSQL"),
 		MYSQL ("MySQL"),
+        MSSQLSERVER("Microsoft SQL Server"),
 		UNKNOWN ("unknown");
 		
 		private String name;

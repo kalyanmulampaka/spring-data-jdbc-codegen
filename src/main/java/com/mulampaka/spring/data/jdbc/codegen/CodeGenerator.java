@@ -56,6 +56,11 @@ public class CodeGenerator
 	private List<String> ignoreTableEndsWithPattern = new ArrayList<String> ();
 	private List<String> ignoreFKeys = new ArrayList<String> ();
 
+
+    private List<String> onlyTableList = new ArrayList<String> ();
+    private List<String> onlyTableStartsWithPattern = new ArrayList<String> ();
+    private List<String> onlyTableEndsWithPattern = new ArrayList<String> ();
+
 	private String propertiesFile;
 
 	public CodeGenerator ()
@@ -167,6 +172,35 @@ public class CodeGenerator
 				logger.info ("Ignore table Starts with pattern:{}", this.ignoreTableStartsWithPattern);
 				logger.info ("Ignore table Ends with pattern:{}", this.ignoreTableEndsWithPattern);
 			}
+
+
+            String onlyTableListStr = this.properties.getProperty ("only.tablelist");
+            if (StringUtils.isNotBlank (onlyTableListStr))
+            {
+                StringTokenizer strTok = new StringTokenizer (onlyTableListStr, ",");
+                while (strTok.hasMoreTokens ())
+                {
+                    String token = strTok.nextToken ().toLowerCase ().trim ();
+                    if (StringUtils.startsWith (token, "*"))
+                    {
+                        this.onlyTableEndsWithPattern.add (token.substring (1, token.length ()));
+                    }
+                    else if (StringUtils.endsWith (token, "*"))
+                    {
+                        this.onlyTableStartsWithPattern.add (token.substring (0, token.length () - 1));
+                    }
+                    else
+                    {
+                        this.onlyTableList.add (token);
+                    }
+                }
+                logger.info ("Only table list:{}", this.onlyTableList);
+                logger.info ("Only table Starts with pattern:{}", this.onlyTableStartsWithPattern);
+                logger.info ("Only table Ends with pattern:{}", this.onlyTableEndsWithPattern);
+            }
+
+
+
 			// Add ignore fkeys
 			String ignoreFKeys = this.properties.getProperty ("ignore.fkeys");
 			String[] fkeys = StringUtils.split (ignoreFKeys, ",");
@@ -193,6 +227,15 @@ public class CodeGenerator
 						logger.info ("Table:{} is in the ignore table list, not generating code for this table.", tableName);
 						continue;
 					}
+
+                    if (this.onlyTableList.size()>0 && !this.onlyTable(tableName.toLowerCase ()))
+                    {
+                        logger.info ("Table:{} not is in the only table list, not generating code for this table.", tableName);
+                        continue;
+                    }
+
+
+
 					logger.debug ("DB Product name:{}", metaData.getDatabaseProductName ());
 					logger.debug ("DB Product version:{}", metaData.getDatabaseProductVersion ());
 
@@ -249,6 +292,36 @@ public class CodeGenerator
 		}
 		return false;
 	}
+
+
+    private boolean onlyTable (String tableName)
+    {
+
+        // first do a actual match
+        if (this.onlyTableList.contains (tableName.toLowerCase ()))
+        {
+            return true;
+        }
+        // do a startswith check
+        for (String onlyStartsWithPattern : this.onlyTableStartsWithPattern)
+        {
+            if (StringUtils.startsWith (tableName, onlyStartsWithPattern))
+            {
+                return true;
+            }
+        }
+        // do a startswith check
+        for (String onlyEndsWithPattern : this.onlyTableEndsWithPattern)
+        {
+            if (StringUtils.endsWith (tableName, onlyEndsWithPattern))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
 	private void createClasses (DatabaseMetaData metaData, String tableName) throws Exception
 	{
@@ -445,7 +518,10 @@ public class CodeGenerator
 		ResultSet cset = metaData.getColumns (null, null, tableName, null);
 		while (cset.next ())
 		{
-			String colName = cset.getString ("COLUMN_NAME");
+            int colDecDig = cset.getInt ("DECIMAL_DIGITS");
+            logger.debug ("Column degdig:{}", colDecDig);
+
+			String colName = cset.getString("COLUMN_NAME");
 			logger.debug ("Found Column:" + colName);
 			int colSize = cset.getInt ("COLUMN_SIZE");
 			logger.debug ("Column size:{}", colSize);
@@ -483,8 +559,25 @@ public class CodeGenerator
 			}
 			else if ((type == Types.DOUBLE) || (type == Types.NUMERIC))
 			{
-				fieldType = ParameterType.DOUBLE;
-				parameter = new Parameter (colName, ParameterType.DOUBLE);
+                fieldType = ParameterType.DOUBLE;
+                parameter = new Parameter (colName, ParameterType.DOUBLE);
+
+                //RGG
+                if (type == Types.NUMERIC){
+                    BaseClass.DATABASE d = BaseClass.DATABASE.getByName(domainClass.getDbProductName());
+                    switch(d)
+                    {
+                        case MSSQLSERVER:
+                            if (colDecDig <= 0){ //lo convierto a integer     o Long segun el size
+                                fieldType = ParameterType.LONG;
+                                parameter = new Parameter(colName, ParameterType.LONG);
+                            }
+                            break;
+                        default:
+                    }
+                }
+
+
 			}
 			else if ((type == Types.FLOAT) || (type == Types.DECIMAL))
 			{
@@ -584,7 +677,7 @@ public class CodeGenerator
 		return conn;
 	}
 
-	
+
 
 
 
