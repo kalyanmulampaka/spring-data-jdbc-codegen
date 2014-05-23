@@ -98,8 +98,9 @@ public class DBClass extends BaseClass
 				sourceBuf.append ("\t\t\tobj.set" + WordUtils.capitalize (CodeGenUtil.normalize (field.getName ())) + "(rs.get" + typeName + "(COLUMNS." + field.getName ().toUpperCase () + ".getColumnName()));\n");
 			}
 		}
-
-		if (this.pkeys.size () > 1)
+        //RGG
+		if (this.pkeys.size () >= 1)
+        //if (this.pkeys.size () > 1)
 		{
 			sourceBuf.append ("\t\t\tobj.setPersisted(true);\n");
 		}
@@ -220,7 +221,9 @@ public class DBClass extends BaseClass
 				sourceBuf.append ("\t\t\tobj.set" + WordUtils.capitalize (CodeGenUtil.normalize (field.getName ())) + "(rs.get" + typeName + "(COLUMNS." + field.getName ().toUpperCase () + ".getColumnAliasName()));\n");
 			}
 		}
-		if (this.pkeys.size () > 1)
+        //RGG
+        if (this.pkeys.size () >= 1)
+        //if (this.pkeys.size () > 1)
 		{
 			sourceBuf.append ("\t\t\tobj.setPersisted(true);\n");
 		}

@@ -91,7 +91,7 @@ public class RepositoryClass extends BaseClass
 			super.printCloseBrace (1, 2);
 			
 			// add postcreate
-			sourceBuf.append ("\t@Override\n");
+			//sourceBuf.append ("\t@Override\n");//RGG
 			sourceBuf.append ("\tprotected " + this.name + " postCreate(" + this.name + " entity, Number generatedId)\n");
 			super.printOpenBrace (1, 1);
 			sourceBuf.append ("\t\tentity.setId(generatedId.intValue());\n");
@@ -101,11 +101,14 @@ public class RepositoryClass extends BaseClass
 		}
 		else if (this.pkeys.size () == 1)
 		{
+            //rgg
+            String key = this.pkeys.keySet ().iterator ().next ();
 			// add ctor
 			sourceBuf.append ("\tpublic " + this.name + this.classSuffix + "()\n");
 			super.printOpenBrace (1, 1);
 			sourceBuf.append ("\t\tsuper (" + this.name + DBClass.DB_CLASSSUFFIX + ".ROW_MAPPER, " + this.name + DBClass.DB_CLASSSUFFIX + ".ROW_UNMAPPER, "
-					+ this.name + DBClass.DB_CLASSSUFFIX + ".getTableName ());\n");
+					//+ this.name + DBClass.DB_CLASSSUFFIX + ".getTableName ());\n");//rgg
+                      + this.name + DBClass.DB_CLASSSUFFIX + ".getTableName (),\""+key+"\");\n");
 			super.printCloseBrace (1, 2);
 			
 			// add ctor2
@@ -118,10 +121,10 @@ public class RepositoryClass extends BaseClass
 			super.printCloseBrace (1, 2);
 			
 			// add postcreate
-			sourceBuf.append ("\t@Override\n");
+			//sourceBuf.append ("\t@Override\n"); //RGG
 			sourceBuf.append ("\tprotected " + this.name + " postCreate(" + this.name + " entity, Number generatedId)\n");
 			super.printOpenBrace (1, 1);
-			String key = this.pkeys.keySet ().iterator ().next ();
+			//String key = this.pkeys.keySet ().iterator ().next ();
 			ParameterType keyType = this.pkeys.values ().iterator ().next ();
 			String keyTypeName = "";
 			switch (keyType)
@@ -165,15 +168,28 @@ public class RepositoryClass extends BaseClass
 			super.printCloseBrace (1, 2);
 			
 			// add postcreate
-			sourceBuf.append ("\t@Override\n");
+			//sourceBuf.append ("\t@Override\n"); //RGG
 			sourceBuf.append ("\tprotected " + this.name + " postCreate(" + this.name + " entity, Number generatedId)\n");
 			super.printOpenBrace (1, 1);
 			sourceBuf.append ("\t\tentity.setPersisted(true);\n");
 			sourceBuf.append ("\t\treturn entity;\n");
 			super.printCloseBrace (1, 2);
 
-		}
-		sourceBuf.append ("\n");
+
+
+
+        }
+
+
+        //RGG
+        sourceBuf.append ("\tprotected " + this.name + " postUpdate(" + this.name + " entity)\n");
+        super.printOpenBrace (1, 1);
+        sourceBuf.append ("\t\tentity.setPersisted(true);\n");
+        sourceBuf.append ("\t\treturn entity;\n");
+        super.printCloseBrace (1, 2);
+
+
+        sourceBuf.append ("\n");
 	}
 	
 
