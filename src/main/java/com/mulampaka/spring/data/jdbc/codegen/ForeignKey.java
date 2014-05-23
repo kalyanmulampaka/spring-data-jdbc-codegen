@@ -31,6 +31,7 @@ public class ForeignKey
 	private String fkColumnName;
 	private String refTableName;
 	private String refColumnName;
+	private String fieldName;
 	
 	public ForeignKey ()
 	{
@@ -85,6 +86,16 @@ public class ForeignKey
 	public void setRefColumnName (String refColumnName)
 	{
 		this.refColumnName = refColumnName;
+	}
+	
+	public String getFieldName ()
+	{
+		return this.fieldName;
+	}
+	
+	public void setFieldName (String fieldName)
+	{
+		this.fieldName = fieldName;
 	}
 	
 

@@ -54,6 +54,8 @@ public abstract class BaseClass
 	protected StringBuffer userSourceBuf = new StringBuffer ("");
 	protected StringBuffer sourceBuf = new StringBuffer ("");
 	
+	protected String[] dontPluralizeWords = null;
+
 	private static String COMMENT_START = "/* START Do not remove/edit this line. CodeGenerator will preserve any code between start and end tags.*/";
 	private static String COMMENT_END = "/* END Do not remove/edit this line. CodeGenerator will preserve any code between start and end tags.*/";
 	
@@ -451,6 +453,16 @@ public abstract class BaseClass
 		this.dbProductVersion = dbProductVersion;
 	}
 
+
+	public String[] getDontPluralizeWords ()
+	{
+		return this.dontPluralizeWords;
+	}
+	
+	public void setDontPluralizeWords (String[] dontPluralizeWords)
+	{
+		this.dontPluralizeWords = dontPluralizeWords;
+	}
 
 	public enum DATABASE
 	{

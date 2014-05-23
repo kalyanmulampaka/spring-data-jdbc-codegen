@@ -71,6 +71,16 @@ public class CodeGenUtil
 		strBuf.append(name);
 		return strBuf.toString();
 	}
+	
+	public static String removeTrailingId (String name)
+	{
+		if (StringUtils.endsWith (name, "id"))
+		{
+			name = name.substring (0, name.length () - 2);
+		}
+		name = CodeGenUtil.normalize (name);
+		return name;
+	}
 
 	public static String createTableAlias (String tableName)
 	{
@@ -183,6 +193,33 @@ public class CodeGenUtil
 		}
 	}
 
-
+	public static String pluralizeName (String name, String[] dontPluralizeWords)
+	{
+		StringBuffer buf = new StringBuffer (name);
+		if (dontPluralizeWords != null && dontPluralizeWords.length > 0)
+		{
+			for (String word : dontPluralizeWords)
+			{
+				if (StringUtils.endsWith (name.toLowerCase (), word.trim ()))
+					return name;
+			}
+		}
+		if (StringUtils.endsWith (name, "y"))
+		{
+			buf = new StringBuffer (name.substring (0, name.length () - 1));
+			buf.append ("ies");
+		}
+		else if (StringUtils.endsWith (name, "z"))
+		{
+			buf.append ("zes");
+		}
+		else if (!StringUtils.endsWith (name, "s")) // has to be the last condition
+		{
+			// pluralize
+			buf.append ("s");
+		}
+		return buf.toString ();
+		
+	}
 
 }

@@ -5,13 +5,13 @@
 	<groupId>com.mulampaka.spring.data.jdbc</groupId>
 	<artifactId>spring-data-jdbc-codegen</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>Spring Data Jdbc Code Generator</name>
 	<url>https://github.com/kalyanmulampaka</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>3.2.2.RELEASE</spring.version>
-		<hibernate-validator.version>4.1.0.Final</hibernate-validator.version>
+		<hibernate-validator.version>5.1.0.Final</hibernate-validator.version>
 		<bonecp.version>0.8.0-rc1</bonecp.version>
 		<logback.version>1.0.11</logback.version>
 		<slf4j.version>1.7.5</slf4j.version>
@@ -65,7 +65,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>

@@ -175,7 +175,6 @@ public class CodeGenerator
 				this.ignoreFKeys.add (fkey.trim ());
 			}
 
-
 			if (metaData != null)
 			{
 
@@ -265,6 +264,10 @@ public class CodeGenerator
 			generateJsr303Annotations = Boolean.parseBoolean (generateJsr303AnnotationsStr);
 		}
 
+		// Get the dont pluralize words
+		String dontPluralizeWordsStr = this.properties.getProperty ("dont.pluralize.words");
+		String[] dontPluralizeWords = StringUtils.split (dontPluralizeWordsStr, ",");
+		this.logger.debug ("Don't Pluralize words:{}", dontPluralizeWords);
 		List<Field> fields = new ArrayList<Field> ();
 		List<Field> dbFields = new ArrayList<Field> ();
 		List<Method> methods = new ArrayList<Method> ();
@@ -320,6 +323,7 @@ public class CodeGenerator
 		
 		// create the repo class
 		RepositoryClass repoClass = new RepositoryClass ();
+		repoClass.setDontPluralizeWords (dontPluralizeWords);
 		repoClass.createLogger ();
 		repoClass.getImports ().add (dbPackageName + "." + WordUtils.capitalize (CodeGenUtil.normalize (dbClass.getName ())) + DBClass.DB_CLASSSUFFIX);
 		repoClass.getImports ().add (domainPackageName + "." + WordUtils.capitalize (CodeGenUtil.normalize (domainClass.getName ())));
@@ -366,12 +370,16 @@ public class CodeGenerator
 					fkey.setFkTableName (fkTableName);
 					fkey.setFkColumnName (fkColName);
 					fkey.setRefTableName (pkTableName);
-					fkey.setRefColumnName (pkColName);
+					fkey.setRefColumnName (pkColName);					
+					fkey.setFieldName (CodeGenUtil.removeTrailingId (fkColName));
+
 					domainClass.getFkeys ().put (fkColName, fkey);
 					dbClass.getFkeys ().put (fkColName, fkey);
 					repoClass.getFkeys ().put (fkColName, fkey);
+					
 					if (!repoClass.getImports ().contains ("java.util.List"))
 						repoClass.getImports ().add ("java.util.List");
+
 				}
 			}
 		}

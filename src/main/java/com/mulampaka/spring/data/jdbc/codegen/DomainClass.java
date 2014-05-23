@@ -285,12 +285,11 @@ public class DomainClass extends BaseClass
 			{
 				ForeignKey fkey = this.fkeys.get (fkColName);
 				String refObj = WordUtils.capitalize (CodeGenUtil.normalize (fkey.getRefTableName ()));
-				sourceBuf.append ("\tprivate " + refObj + " " + CodeGenUtil.normalize (fkey.getRefTableName ()) + ";\n");
-				
+				sourceBuf.append ("\tprivate " + refObj + " " + CodeGenUtil.normalize (fkey.getFieldName ()) + ";\n");
 				Method method = new Method ();
 				methods.add (method);
-				method.setName (fkey.getRefTableName ());
-				Parameter parameter = new Parameter (fkey.getRefTableName (), ParameterType.OBJECT);
+				method.setName (fkey.getFieldName ());
+				Parameter parameter = new Parameter (fkey.getFieldName (), fkey.getRefTableName (), ParameterType.OBJECT);
 				method.setParameter (parameter);
 			}
 		}
@@ -416,7 +415,10 @@ public class DomainClass extends BaseClass
 			ParameterType pType = method.getParameter ().getType ();
 			if (pType == ParameterType.OBJECT)
 			{
-				paramType = WordUtils.capitalize (CodeGenUtil.normalize (method.getParameter ().getName ()));
+				String name = method.getParameter ().getClassName ();
+				if (StringUtils.isBlank (name))
+					name = method.getParameter ().getName ();
+				paramType = WordUtils.capitalize (CodeGenUtil.normalize (name));
 			}
 			else
 			{

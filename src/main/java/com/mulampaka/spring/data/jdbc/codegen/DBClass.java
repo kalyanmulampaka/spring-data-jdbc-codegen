@@ -192,7 +192,7 @@ public class DBClass extends BaseClass
 			for (String fkColName : this.fkeys.keySet ())
 			{
 				ForeignKey fkey = this.fkeys.get (fkColName);
-				String refObj = WordUtils.capitalize (CodeGenUtil.normalize (fkey.getRefTableName ()));
+				String refObj = WordUtils.capitalize (CodeGenUtil.normalize (fkey.getFieldName ()));
 				sourceBuf.append ("\t\tprivate boolean load" + refObj + " = false;\n");
 				sourceBuf.append ("\t\tpublic void setLoad" + refObj + " (boolean load" + refObj + ")\n");
 				this.printOpenBrace (2, 1);
@@ -229,9 +229,10 @@ public class DBClass extends BaseClass
 			for (String fkColName : this.fkeys.keySet ())
 			{
 				ForeignKey fkey = this.fkeys.get (fkColName);
-				String refObj = WordUtils.capitalize (CodeGenUtil.normalize (fkey.getRefTableName ()));
+				String refObj = WordUtils.capitalize (CodeGenUtil.normalize (fkey.getFieldName ()));
+				String refClass = WordUtils.capitalize (CodeGenUtil.normalize (fkey.getRefTableName ()));
 				sourceBuf.append ("\t\t\tif (this.loadAllFKeys || this.load" + refObj + ")\n");
-				sourceBuf.append ("\t\t\t\tobj.set" + refObj + "(" + refObj + DBClass.DB_CLASSSUFFIX + ".ALIAS_ROW_MAPPER.mapRow(rs, rowNum)" + ");\n");
+				sourceBuf.append ("\t\t\t\tobj.set" + refObj + "(" + refClass + DBClass.DB_CLASSSUFFIX + ".ALIAS_ROW_MAPPER.mapRow(rs, rowNum)" + ");\n");
 			}
 		}
 		this.printRelations ();

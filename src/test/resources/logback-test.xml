@@ -5,8 +5,8 @@
 	<logger name="org" level="INFO" />
 	<logger name="org.springframework.test" level="WARN" />
 	<logger name="org.springframework.jdbc" level="WARN" />
-
-	<root level="ALL">
+    <logger name="com.mulampaka.spring.data.jdbc.codegen" level="INFO" />
+	<root level="INFO">
 		<appender class="ch.qos.logback.core.ConsoleAppender">
 			<encoder>
 				<Pattern>%d{HH:mm:ss:SSS} | %-5level | %thread | %logger{20} | %msg%n%rEx</Pattern>

@@ -187,18 +187,12 @@ public class RepositoryClass extends BaseClass
 			{
 				ForeignKey fkey = this.fkeys.get (fkColName);
 				String refObj = WordUtils.capitalize (CodeGenUtil.normalize (fkey.getFkTableName ()));
-				String methodClassName = refObj;
-				if (!StringUtils.endsWith (refObj, "s"))
-				{
-					// pluralize
-					methodClassName += "s";
-				}
-				
+				String methodClassName = CodeGenUtil.pluralizeName (refObj, this.getDontPluralizeWords ());
 				sourceBuf.append ("\tpublic List<" + refObj + "> get" + methodClassName + "By" + WordUtils.capitalize (CodeGenUtil.normalize (fkColName)) + " (Long " + CodeGenUtil.normalize (fkColName) + ")\n");
 				this.printOpenBrace (1, 1);
 				sourceBuf.append ("\t\tString sql = \"select * from \" + " + refObj + DBClass.DB_CLASSSUFFIX + ".getTableName() + " + "\" where \" + " + refObj + DBClass.DB_CLASSSUFFIX + ".COLUMNS." + fkColName.toUpperCase () + ".getColumnName() + \" = ? \";\n");
 				sourceBuf.append ("\t\treturn this.getJdbcOperations ().query (sql, new Object[] { " + CodeGenUtil.normalize (fkColName) + " }, " + refObj + DBClass.DB_CLASSSUFFIX + ".ROW_MAPPER);\n");
-				this.printCloseBrace (1, 1);
+				this.printCloseBrace (1, 2);
 			}
 		}
 		sourceBuf.append ("\n");
