@@ -176,12 +176,27 @@ public class DomainClass extends BaseClass
 						//update groups
 						sourceBuf.append ("\t@NotNull (groups = { ");
 						int i = this.jsr303UpdateGroups.size ();
+                        i = this.jsr303InsertGroups.size ();
+                        if (i > 0)
+                        {
+                            for (String name : this.jsr303InsertGroups)
+                            {
+                                sourceBuf.append (name + ".class");
+                                if (--i > 0)
+                                    sourceBuf.append (", ");
+                            }
+                            if (!this.jsr303UpdateGroups.isEmpty ())
+                            {
+                                sourceBuf.append (", ");
+                            }
+                        }
 						for (String name : this.jsr303UpdateGroups)
 						{
 							sourceBuf.append (name + ".class");
 							if (--i > 0)
 								sourceBuf.append (", ");
 						}
+
 						sourceBuf.append (" })\n");
 					}
 					else
