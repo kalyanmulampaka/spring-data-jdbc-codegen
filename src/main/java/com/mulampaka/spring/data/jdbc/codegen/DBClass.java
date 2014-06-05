@@ -72,7 +72,7 @@ public class DBClass extends BaseClass
 
     protected void printSelectAllColumns ()
     {
-        sourceBuf.append ("\tpublic static String selectAllColumns(boolean useAlias)\n\t{\n\t\treturn (useAlias ? TABLE_ALIAS : TABLE_NAME) + \".*\";\n\t}\n\n");
+        sourceBuf.append ("\tpublic static String selectAllColumns(boolean ... useAlias)\n\t{\n\t\treturn (useAlias[0] ? TABLE_ALIAS : TABLE_NAME) + \".*\";\n\t}\n\n");
     }
 
 	protected void printRowMapper ()
