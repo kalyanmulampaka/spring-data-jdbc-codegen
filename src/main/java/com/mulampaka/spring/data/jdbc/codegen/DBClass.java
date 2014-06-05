@@ -66,9 +66,14 @@ public class DBClass extends BaseClass
 		sourceBuf.append ("\tpublic static String getTableName()\n\t{\n\t\treturn TABLE_NAME;\n\t}\n\n");
 		
 		sourceBuf.append ("\tpublic static String getTableAlias()\n\t{\n\t\treturn TABLE_NAME + \" as \" + TABLE_ALIAS;\n\t}\n\n");
+        
+        sourceBuf.append ("\tpublic static String getAlias()\n\t{\n\t\treturn TABLE_ALIAS;\n\t}\n\n");
 	}
 
-
+    protected void printSelectAllColumns ()
+    {
+        sourceBuf.append ("\tpublic static String selectAllColumns(boolean useAlias)\n\t{\n\t\treturn (useAlias ? TABLE_ALIAS : TABLE_NAME) + \".*\";\n\t}\n\n");
+    }
 
 	protected void printRowMapper ()
 	{
@@ -352,6 +357,8 @@ public class DBClass extends BaseClass
 		
 		this.printDBTableInfo ();
 		
+        this.printSelectAllColumns ();
+
 		this.printColumnsEnum ();
 		
 		this.printCtor ();
