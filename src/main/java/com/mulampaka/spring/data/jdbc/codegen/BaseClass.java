@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.WordUtils;
@@ -49,7 +50,7 @@ public abstract class BaseClass
 	protected List<Field> fields;
 	protected List<Method> methods;
 	protected Map<String, ParameterType> pkeys = new HashMap<String, ParameterType> ();
-	protected Map<String, ForeignKey> fkeys = new HashMap<String, ForeignKey> ();
+    protected Map<String, ForeignKey> fkeys = new TreeMap<String, ForeignKey> ();
 	protected Map<String, List<Relation>> relations = new HashMap<String, List<Relation>> ();
 	protected StringBuffer userSourceBuf = new StringBuffer ("");
 	protected StringBuffer sourceBuf = new StringBuffer ("");
