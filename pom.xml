@@ -5,7 +5,7 @@
 	<groupId>com.mulampaka.spring.data.jdbc</groupId>
 	<artifactId>spring-data-jdbc-codegen</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<name>Spring Data Jdbc Code Generator</name>
 	<url>https://github.com/kalyanmulampaka</url>
 	<properties>
@@ -20,12 +20,12 @@
 		<cglib.version>2.2.2</cglib.version>
 		<postgresql.jdbc.version>9.1-901.jdbc4</postgresql.jdbc.version>
 		<mysql.jdbc.version>5.0.4</mysql.jdbc.version>
-		<junit.version>4.8.2</junit.version>
+        <testng.version>6.8.8</testng.version>
 		<commons.lang.version>2.4</commons.lang.version>
 		<commons.io.version>2.4</commons.io.version>
 		<commons.logging.version>1.1.1</commons.logging.version>
 	</properties>
-	<dependencies>		
+	<dependencies>		       	
 		<dependency>
 			<groupId>com.jolbox</groupId>
 			<artifactId>bonecp</artifactId>
@@ -87,11 +87,10 @@
 			<version>${postgresql.jdbc.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -156,5 +155,31 @@
                 </configuration>
             </plugin>
 		</plugins>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+            <testResource>
+                <directory>src/test/java</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.sql</include>
+                </includes>
+            </testResource>
+        </testResources>    		
 	</build>
 </project>

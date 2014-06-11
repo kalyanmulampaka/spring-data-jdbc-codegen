@@ -16,21 +16,17 @@
  * 
  * @author Kalyan Mulampaka
  */
-package com.mulampaka.spring.data.jdbc.codegen.test;
+package com.mulampaka.spring.data.jdbc.codegen.test.config;
 
-import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
-@RunWith (SpringJUnit4ClassRunner.class)
-@ContextConfiguration (loader = AnnotationConfigContextLoader.class)
-public abstract class SpringJdbcBaseTest
+
+@ContextConfiguration (loader = AnnotationConfigContextLoader.class, classes = { TestSpringConfiguration.class }, inheritLocations = false)
+public abstract class SpringJdbcBaseTest extends AbstractTestNGSpringContextTests
 {
 	
-	public SpringJdbcBaseTest ()
-	{
-
-	}
 	
+
 }

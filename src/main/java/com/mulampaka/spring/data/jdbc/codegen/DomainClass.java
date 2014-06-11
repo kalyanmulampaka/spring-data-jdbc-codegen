@@ -316,7 +316,7 @@ public class DomainClass extends BaseClass
 		if (!this.relations.isEmpty ())
 		{
 			// get the relations where this table is a parent
-			List<Relation> relations = this.relations.get (this.name);
+            List<Relation> relations = this.relations.get (this.name.toLowerCase ());
 			if (relations != null && !relations.isEmpty ())
 			{
 				for (Relation relation : relations)
@@ -337,11 +337,9 @@ public class DomainClass extends BaseClass
 						break;
 					case ONE_TO_MANY:
 						child = CodeGenUtil.normalize (relation.getChild ());
-						String fieldName = child;
-						if (!StringUtils.endsWith (fieldName, "s"))
-						{
-							fieldName += "s";
-						}
+                        logger.debug ("Child table name:{}", child);
+						String fieldName = CodeGenUtil.pluralizeName (child, this.getDontPluralizeWords ());
+                        logger.debug ("Field name:{}", fieldName);
 						sourceBuf.append ("\tprivate List<" + WordUtils.capitalize (child));
 						sourceBuf.append ("> " + fieldName + " = new ArrayList<" + WordUtils.capitalize (child) + "> ();\n");
 						

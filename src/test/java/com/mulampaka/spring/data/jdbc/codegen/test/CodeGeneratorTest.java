@@ -18,10 +18,11 @@
  */
 package com.mulampaka.spring.data.jdbc.codegen.test;
 
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.Test;
 import com.mulampaka.spring.data.jdbc.codegen.CodeGenerator;
+import com.mulampaka.spring.data.jdbc.codegen.test.config.SpringJdbcBaseTest;
 
 public class CodeGeneratorTest extends SpringJdbcBaseTest
 {
@@ -40,7 +41,7 @@ public class CodeGeneratorTest extends SpringJdbcBaseTest
 	{
 		generator = new CodeGenerator ();
 		generator.setPropertiesFile ("src/test/resources/codegenerator-test.properties");
-		generator.generate();
+        generator.generate ();
 	}
 
 

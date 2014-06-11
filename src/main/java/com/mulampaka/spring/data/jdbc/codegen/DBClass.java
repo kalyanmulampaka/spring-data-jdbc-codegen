@@ -222,7 +222,7 @@ public class DBClass extends BaseClass
 				{
 					typeName = "Timestamp";
 				}
-				sourceBuf.append ("\t\t\tobj.set" + WordUtils.capitalize (CodeGenUtil.normalize (field.getName ())) + "(rs.get" + typeName + "(COLUMNS." + field.getName ().toUpperCase () + ".getColumnAliasName()));\n");
+                sourceBuf.append ("\t\t\tobj.set" + WordUtils.capitalize (CodeGenUtil.normalize (field.getName ())) + "(rs.get" + typeName + "(COLUMNS." + field.getName ().toUpperCase () + ".getColumnAliasName()));\n");
 			}
 		}
 		if (this.pkeys.size () > 1)

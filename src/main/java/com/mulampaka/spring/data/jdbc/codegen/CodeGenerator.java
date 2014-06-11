@@ -182,10 +182,10 @@ public class CodeGenerator
 				CodeGenUtil.createPackage (srcFolderPath, dbPackageName);
 				CodeGenUtil.createPackage (srcFolderPath, repositoryPackageName);
 
-				ResultSet rset = metaData.getTables (null, null, null, new String[] { "TABLE" });
+                ResultSet rset = metaData.getTables (null, null, null, new String[] { "TABLE" });
 				while (rset.next ())
 				{
-					String tableName = rset.getString ("TABLE_NAME");
+                    String tableName = rset.getString ("TABLE_NAME");
 					logger.info ("Found Table:" + tableName);
 					if (this.ignoreTable (tableName.toLowerCase ()))
 					{
@@ -266,16 +266,19 @@ public class CodeGenerator
 
 		// Get the dont pluralize words
 		String dontPluralizeWordsStr = this.properties.getProperty ("dont.pluralize.words");
+        logger.debug ("Dont pluralize words:{}", dontPluralizeWordsStr);
+        dontPluralizeWordsStr = StringUtils.replace (dontPluralizeWordsStr, " ", "");
 		String[] dontPluralizeWords = StringUtils.split (dontPluralizeWordsStr, ",");
-		this.logger.debug ("Don't Pluralize words:{}", dontPluralizeWords);
+        logger.debug ("Don't Pluralize words:{}", new Object[] { dontPluralizeWords });
 		List<Field> fields = new ArrayList<Field> ();
 		List<Field> dbFields = new ArrayList<Field> ();
 		List<Method> methods = new ArrayList<Method> ();
 		
 		DomainClass domainClass = new DomainClass ();
+        domainClass.setDontPluralizeWords (dontPluralizeWords);
 		domainClass.setDbProductName (metaData.getDatabaseProductName ());
 		domainClass.setDbProductVersion (metaData.getDatabaseProductVersion ());
-		domainClass.setName (tableName);
+        domainClass.setName (tableName);
 		domainClass.setRootFolderPath (rootFolderPath);
 		domainClass.setPackageName (domainPackageName);
 		domainClass.setFields (fields);
@@ -320,6 +323,7 @@ public class CodeGenerator
 		dbClass.setRootFolderPath (rootFolderPath);
 		dbClass.setPackageName (dbPackageName);
 		dbClass.setFields (dbFields);
+        dbClass.setDontPluralizeWords (dontPluralizeWords);
 		
 		// create the repo class
 		RepositoryClass repoClass = new RepositoryClass ();
@@ -412,8 +416,8 @@ public class CodeGenerator
 				if (domainClass.getName ().equals (relationTokens[0]))
 				{
 					Relation relation = new Relation ();
-					relation.setParent (relationTokens[0]);
-					relation.setChild (relationTokens[1]);
+                    relation.setParent (relationTokens[0].toLowerCase ());
+                    relation.setChild (relationTokens[1].toLowerCase ());
 					relation.setType (RelationType.getByName (relationTokens[2]));
 					List<Relation> domainRelations = domainClass.getRelations ().get (relationTokens[0]);
 					if (domainRelations == null)
@@ -582,12 +586,18 @@ public class CodeGenerator
 		String userName = this.properties.getProperty ("jdbc.username");
 		String password = this.properties.getProperty ("jdbc.password");
 		logger.info ("Connecting to database at:[" + url + "]" + " with username/password:[" + userName + "/" + password + "]");
-		Properties connProps = new Properties ();
-		connProps.put ("user", userName);
-		connProps.put ("password", password);
-		conn = DriverManager.getConnection (
-				url,
-				connProps);
+        Properties connProps = new Properties ();
+        if (userName == null && password == null)
+        {
+            conn = DriverManager.getConnection (url);
+        }
+        else
+        {
+            connProps.put ("user", userName);
+            connProps.put ("password", password);
+            conn = DriverManager.getConnection (url, connProps);
+        }
+
 		logger.info ("Connected to database");
 		return conn;
 	}

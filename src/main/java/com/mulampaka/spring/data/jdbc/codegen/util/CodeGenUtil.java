@@ -195,11 +195,14 @@ public class CodeGenUtil
 
 	public static String pluralizeName (String name, String[] dontPluralizeWords)
 	{
+        logger.debug ("Pluralizing name:{}, DontPluralize words:{}", new Object[] { name, dontPluralizeWords });
 		StringBuffer buf = new StringBuffer (name);
+
 		if (dontPluralizeWords != null && dontPluralizeWords.length > 0)
 		{
 			for (String word : dontPluralizeWords)
 			{
+                logger.trace ("Checking word:{}", word.trim ());
 				if (StringUtils.endsWith (name.toLowerCase (), word.trim ()))
 					return name;
 			}
