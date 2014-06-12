@@ -449,14 +449,11 @@ public class DomainClass extends BaseClass
 			// setter
 			if (method.isGenerateSetter ())
 			{
+                logger.debug ("Method name:{}", methodName);
 				if (pType == ParameterType.LIST)
 				{
-					String mName = methodName;
-					if (!StringUtils.endsWith (methodName, "s"))
-					{
-						// pluralize
-						mName += "s";
-					}
+                    String mName = CodeGenUtil.pluralizeName (methodName, this.getDontPluralizeWords ());
+                    logger.debug ("Pluralized Method name:{}", mName);
 					sourceBuf.append ("\tpublic void set" + mName + " (");
 					sourceBuf.append ("List<" + methodName + "> " + paramName);
 					sourceBuf.append (")\n");
@@ -484,13 +481,8 @@ public class DomainClass extends BaseClass
 			{
 				if (pType == ParameterType.LIST)
 				{
-					String mName = methodName;
-					if (!StringUtils.endsWith (methodName, "s"))
-					{
-						// pluralize
-						mName += "s";
-					}
-					sourceBuf.append ("\tpublic List<" + methodName + "> get" + mName + " ()\n");
+                    String mName = CodeGenUtil.pluralizeName (methodName, this.getDontPluralizeWords ());
+                    sourceBuf.append ("\tpublic List<" + methodName + "> get" + mName + " ()\n");
 					super.printOpenBrace (1, 1);
 					sourceBuf.append ("\t\treturn this." + paramName + ";\n");
 					super.printCloseBrace (1, 2);
