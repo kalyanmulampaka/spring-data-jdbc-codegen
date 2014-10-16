@@ -52,7 +52,7 @@ public class DBClass extends BaseClass
 		this.imports.add ("java.sql.ResultSet");
 		this.imports.add ("java.util.LinkedHashMap");
 		this.imports.add ("java.util.Map");
-		this.imports.add ("com.blogspot.nurkiewicz.jdbcrepository.RowUnmapper");
+		this.imports.add ("com.nurkiewicz.jdbcrepository.RowUnmapper");
 	}
 	
 	protected void printDBTableInfo ()

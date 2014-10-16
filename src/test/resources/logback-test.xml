@@ -41,7 +41,7 @@
     <logger name="org.maven" level="INFO" />    
     
     
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="syslog" />
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />

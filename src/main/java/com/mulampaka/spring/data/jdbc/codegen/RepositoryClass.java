@@ -30,12 +30,12 @@ public class RepositoryClass extends BaseClass
 	final static Logger logger = LoggerFactory.getLogger (RepositoryClass.class);
 	private static String CLASS_SUFFIX = "Repository";
 
-	private static String TBL_DESC_CLASS = "com.blogspot.nurkiewicz.jdbcrepository.TableDescription";
+	private static String TBL_DESC_CLASS = "com.nurkiewicz.jdbcrepository.TableDescription";
 
 	public RepositoryClass ()
 	{
 		this.classSuffix = CLASS_SUFFIX;
-		super.setExtendsClassName ("com.blogspot.nurkiewicz.jdbcrepository.JdbcRepository");
+		super.setExtendsClassName ("com.nurkiewicz.jdbcrepository.JdbcRepository");
 		this.addImports ();
 	}
 	
@@ -209,8 +209,8 @@ public class RepositoryClass extends BaseClass
 		{
 			if (!this.imports.contains ("org.springframework.jdbc.core.RowMapper"))
 				this.imports.add ("org.springframework.jdbc.core.RowMapper");
-			if (!this.imports.contains ("com.blogspot.nurkiewicz.jdbcrepository.RowUnmapper"))
-				this.imports.add ("com.blogspot.nurkiewicz.jdbcrepository.RowUnmapper");
+			if (!this.imports.contains ("com.nurkiewicz.jdbcrepository.RowUnmapper"))
+				this.imports.add ("com.nurkiewicz.jdbcrepository.RowUnmapper");
 		}
 	}
 

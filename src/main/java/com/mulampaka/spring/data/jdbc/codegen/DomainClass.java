@@ -38,7 +38,7 @@ public class DomainClass extends BaseClass
 {
 	
 	final static Logger logger = LoggerFactory.getLogger (DomainClass.class);
-	private static String PK_CLASS = "static com.blogspot.nurkiewicz.jdbcrepository.JdbcRepository.pk";
+	private static String PK_CLASS = "static com.nurkiewicz.jdbcrepository.JdbcRepository.pk";
 
 	private boolean generateJsr303Annotations = false;
 	private List<String> jsr303InsertGroups = new ArrayList<String> ();
