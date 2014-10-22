@@ -298,13 +298,23 @@ public class DomainClass extends BaseClass
 		{
 			for (String fkColName : this.fkeys.keySet ())
 			{
+			    logger.debug ("Adding fk:{}", fkColName);
 				ForeignKey fkey = this.fkeys.get (fkColName);
 				String refObj = WordUtils.capitalize (CodeGenUtil.normalize (fkey.getRefTableName ()));
-				sourceBuf.append ("\tprivate " + refObj + " " + CodeGenUtil.normalize (fkey.getFieldName ()) + ";\n");
+				String fkFieldName = CodeGenUtil.normalize (fkey.getFieldName ());
+				logger.debug ("Processing fkey fieldname:{}", fkey.getFieldName ());
+				if (this.containsFieldName (fkey.getFieldName ())) 
+				{
+				    // field name is already used so add 
+				    fkFieldName = fkFieldName + ++fieldNameCounter;
+				    logger.debug ("FK field name changed to {}", fkFieldName);
+				    fkey.setFieldName (fkFieldName);
+				}
+				sourceBuf.append ("\tprivate " + refObj + " " + fkFieldName + ";\n");
 				Method method = new Method ();
 				methods.add (method);
-				method.setName (fkey.getFieldName ());
-				Parameter parameter = new Parameter (fkey.getFieldName (), fkey.getRefTableName (), ParameterType.OBJECT);
+				method.setName (fkFieldName);
+				Parameter parameter = new Parameter (fkFieldName, fkey.getRefTableName (), ParameterType.OBJECT);
 				method.setParameter (parameter);
 			}
 		}

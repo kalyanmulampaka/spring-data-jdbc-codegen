@@ -56,6 +56,7 @@ public abstract class BaseClass
 	protected StringBuffer sourceBuf = new StringBuffer ("");
 	
 	protected String[] dontPluralizeWords = null;
+	protected int fieldNameCounter = 0;
 
 	private static String COMMENT_START = "/* START Do not remove/edit this line. CodeGenerator will preserve any code between start and end tags.*/";
 	private static String COMMENT_END = "/* END Do not remove/edit this line. CodeGenerator will preserve any code between start and end tags.*/";
@@ -465,6 +466,16 @@ public abstract class BaseClass
 		this.dontPluralizeWords = dontPluralizeWords;
 	}
 
+	public boolean containsFieldName (String name)
+	{
+	    for (Field field : fields)
+        {
+	        if (CodeGenUtil.normalize(field.getName ()).equals (name))
+	            return true;
+        }
+	    return false;
+	}
+	
 	public enum DATABASE
 	{
 		POSTGRESQL ("PostgreSQL"),
