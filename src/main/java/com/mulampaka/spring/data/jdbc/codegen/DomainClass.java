@@ -232,6 +232,12 @@ public class DomainClass extends BaseClass
 						sourceBuf.append (" = " + val + ";\n\n");
 						break;
 					case INTEGER:
+					    // postgres default values for int columns are stored as floats. e.g 100.0
+					    if (StringUtils.contains (val, "."))
+					    {
+					        String[] tokens = StringUtils.split (val, ".");
+					        val = tokens[0];
+					    }
 						sourceBuf.append (" = " + Integer.parseInt (val) + ";\n\n");
 						break;
 					case LONG:
