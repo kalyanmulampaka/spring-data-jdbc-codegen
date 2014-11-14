@@ -16,7 +16,7 @@
 		<logback.version>1.0.11</logback.version>
 		<slf4j.version>1.7.5</slf4j.version>
 		<spring.jdbc.repository.version>0.4</spring.jdbc.repository.version>
-		<spring.data.version>1.5.0.RELEASE</spring.data.version>
+		<spring.data.version>1.8.0.RELEASE</spring.data.version>
 		<cglib.version>2.2.2</cglib.version>
 		<postgresql.jdbc.version>9.1-901.jdbc4</postgresql.jdbc.version>
 		<mysql.jdbc.version>5.0.4</mysql.jdbc.version>
