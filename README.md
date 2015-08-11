@@ -1,5 +1,6 @@
 Spring Data JDBC Codegen Tool
 =============================
+[![Build Status](https://travis-ci.org/kalyanmulampaka/spring-data-jdbc-codegen.svg?branch=master)](https://travis-ci.org/kalyanmulampaka/spring-data-jdbc-codegen)
 
 This is a simple code generator tool to scaffold the spring data jdbc dao classes.
 This tool depends on Spring Data JDBC generic DAO implementation created by Tomasz Nurkiewicz.
