@@ -5,17 +5,18 @@
 	<groupId>com.mulampaka.spring.data.jdbc</groupId>
 	<artifactId>spring-data-jdbc-codegen</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.4</version>
+	<version>1.0.3</version>
 	<name>Spring Data Jdbc Code Generator</name>
 	<url>https://github.com/kalyanmulampaka</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>4.1.1.RELEASE</spring.version>
+		<spring.version>4.0.5.RELEASE</spring.version>
 		<hibernate-validator.version>5.1.0.Final</hibernate-validator.version>
 		<bonecp.version>0.8.0-rc1</bonecp.version>
 		<logback.version>1.0.11</logback.version>
 		<slf4j.version>1.7.5</slf4j.version>
-		<spring.jdbc.repository.version>0.4.1</spring.jdbc.repository.version>		
+		<spring.jdbc.repository.version>0.4</spring.jdbc.repository.version>
+		<spring.data.version>1.8.0.RELEASE</spring.data.version>
 		<cglib.version>2.2.2</cglib.version>
 		<postgresql.jdbc.version>9.1-901.jdbc4</postgresql.jdbc.version>
 		<mysql.jdbc.version>5.0.4</mysql.jdbc.version>
@@ -40,7 +41,11 @@
 			<artifactId>jdbcrepository</artifactId>
 			<version>${spring.jdbc.repository.version}</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons</artifactId>
+			<version>${spring.data.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
