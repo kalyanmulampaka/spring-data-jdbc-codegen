@@ -41,8 +41,10 @@ public class RepositoryClass extends BaseClass
 	
 	@Override
 	protected void addImports ()
-	{
-		this.imports.add ("org.springframework.stereotype.Repository");
+	{		
+		this.imports.add("org.springframework.beans.factory.annotation.Autowired");
+		this.imports.add("org.springframework.jdbc.core.JdbcOperations");
+		this.imports.add("org.springframework.stereotype.Repository");	
 	}
 
 	protected void printClassAnnotations ()
@@ -191,7 +193,7 @@ public class RepositoryClass extends BaseClass
 				sourceBuf.append ("\tpublic List<" + refObj + "> get" + methodClassName + "By" + WordUtils.capitalize (CodeGenUtil.normalize (fkColName)) + " (Long " + CodeGenUtil.normalize (fkColName) + ")\n");
 				this.printOpenBrace (1, 1);
 				sourceBuf.append ("\t\tString sql = \"select * from \" + " + refObj + DBClass.DB_CLASSSUFFIX + ".getTableName() + " + "\" where \" + " + refObj + DBClass.DB_CLASSSUFFIX + ".COLUMNS." + fkColName.toUpperCase () + ".getColumnName() + \" = ? \";\n");
-				sourceBuf.append ("\t\treturn this.getJdbcOperations ().query (sql, new Object[] { " + CodeGenUtil.normalize (fkColName) + " }, " + refObj + DBClass.DB_CLASSSUFFIX + ".ROW_MAPPER);\n");
+				sourceBuf.append ("\t\treturn this.jdbcOperations.query (sql, new Object[] { " + CodeGenUtil.normalize (fkColName) + " }, " + refObj + DBClass.DB_CLASSSUFFIX + ".ROW_MAPPER);\n");
 				this.printCloseBrace (1, 2);
 			}
 		}
@@ -213,6 +215,19 @@ public class RepositoryClass extends BaseClass
 				this.imports.add ("com.nurkiewicz.jdbcrepository.RowUnmapper");
 		}
 	}
+	
+	protected void printFields () 
+	{
+		this.sourceBuf.append("\t@Autowired\n\tprivate JdbcOperations jdbcOperations;\n\n");
+	}
+	
+	protected void printMethods () 
+	{
+		this.sourceBuf.append("\tprotected JdbcOperations getJdbcOperations()\n");
+		this.sourceBuf.append("\t{\n");
+		this.sourceBuf.append("\t\treturn this.jdbcOperations;\n");
+		this.sourceBuf.append("\t}\n\n");
+	}
 
 	@Override
 	public void generateSource ()
@@ -232,6 +247,8 @@ public class RepositoryClass extends BaseClass
 
 		super.printOpenBrace (0, 2);
 		super.printLogger ();
+		this.printFields();
+		this.printMethods();
 		this.printCtor ();
 		
 		this.printFKeyMethods ();
