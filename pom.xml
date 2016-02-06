@@ -19,7 +19,7 @@
 		<cglib.version>2.2.2</cglib.version>
 		<postgresql.jdbc.version>9.1-901.jdbc4</postgresql.jdbc.version>
 		<mysql.jdbc.version>5.0.4</mysql.jdbc.version>
-        <testng.version>6.8.8</testng.version>
+        <testng.version>6.9.10</testng.version>
 		<commons.lang.version>2.4</commons.lang.version>
 		<commons.io.version>2.4</commons.io.version>
 		<commons.logging.version>1.1.1</commons.logging.version>
